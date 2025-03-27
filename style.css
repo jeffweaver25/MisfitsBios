@@ -12,15 +12,24 @@ body {
 h1 {
   text-align: center;
 }
-.filters {
+.filters-row {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-end;
   margin: 1rem 0;
+}
+fieldset {
+  border: 1px solid #666;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+fieldset input {
+  margin-right: 0.5rem;
 }
 #cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
 }
 .card {
@@ -29,8 +38,13 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
-.card img {
-  width: 100%;
-  border-radius: 8px;
+.card img.thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 5px;
+  border-radius: 4px;
+}
+.card .thumbs {
   margin-bottom: 0.5rem;
 }

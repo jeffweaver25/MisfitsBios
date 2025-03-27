@@ -21,20 +21,29 @@ function showInfo(data) {
   const roleFilter = document.getElementById("roleFilter");
   const nameInput = document.getElementById("nameInput");
   const nameSearchBtn = document.getElementById("nameSearchBtn");
+  const clearFiltersBtn = document.getElementById("clearFiltersBtn");
 
   function renderCards(filtered) {
     container.innerHTML = "";
     filtered.forEach(item => {
       const card = document.createElement("div");
       card.className = "card";
+
+      const images = (item.Images || "").split(",").map(url => url.trim()).filter(url => url);
+      const thumbs = images.map(url =>
+        `<a href="${url}" target="_blank"><img class="thumb" src="${url}" alt="img"></a>`
+      ).join("");
+
       card.innerHTML = `
-        ${item.Images ? `<img src="${item.Images}" alt="Profile Image">` : ""}
+        <div class="thumbs">${thumbs}</div>
         <h3>${item["In-Game User Name"]}</h3>
         <p><strong>Discord:</strong> ${item["Discord User Name"]}</p>
         <p><strong>Clan:</strong> ${item["Clan"]}</p>
         <p><strong>Role:</strong> ${item["Role"]}</p>
         <p><strong>Favorite Champ:</strong> ${item["Favorite Champion"]}</p>
-        <p>${item["Other Comments"]}</p>
+        <p><strong>Occupation:</strong> ${item["Occupation"]}</p>
+        <p><strong>Family / Pets:</strong> ${item["Family / Pets"]}</p>
+        <p><strong>Comments:</strong> ${item["Comments"]}</p>
       `;
       container.appendChild(card);
     });
@@ -68,12 +77,20 @@ function showInfo(data) {
     renderCards(filtered);
   }
 
+  function clearFilters() {
+    clanFilter.value = "";
+    roleFilter.value = "";
+    nameInput.value = "";
+    renderCards(data);
+  }
+
   populateDropdown(clanFilter, CLANS);
   populateDropdown(roleFilter, ROLES);
 
   clanFilter.addEventListener("change", filterCards);
   roleFilter.addEventListener("change", filterCards);
   nameSearchBtn.addEventListener("click", filterCards);
+  clearFiltersBtn.addEventListener("click", clearFilters);
 
   renderCards(data);
 }

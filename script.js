@@ -1,12 +1,26 @@
 console.log("Script loaded");
 
+const CLANS = [
+  "1MIS - Neglected Misfits / Strapons",
+  "2MIS - Unleashed Misfits",
+  "3MIS - Abandoned Misfits",
+  "5MIS - Rejected Misfits / Kittens",
+  "5KIS - Exiled Misfits"
+];
+
+const ROLES = [
+  "Clan Leader",
+  "Clan Deputy",
+  "Cluster Officer / Leadership",
+  "RSL Content Expert"
+];
+
 function showInfo(data) {
   const container = document.getElementById("cards");
   const clanFilter = document.getElementById("clanFilter");
   const roleFilter = document.getElementById("roleFilter");
-
-  const clans = new Set();
-  const roles = new Set();
+  const nameInput = document.getElementById("nameInput");
+  const nameSearchBtn = document.getElementById("nameSearchBtn");
 
   function renderCards(filtered) {
     container.innerHTML = "";
@@ -15,52 +29,51 @@ function showInfo(data) {
       card.className = "card";
       card.innerHTML = `
         ${item.Images ? `<img src="${item.Images}" alt="Profile Image">` : ""}
-        <h3>${item["In-Game User Name (s), include alt accounts"]}</h3>
+        <h3>${item["In-Game User Name"]}</h3>
         <p><strong>Discord:</strong> ${item["Discord User Name"]}</p>
-        <p><strong>Clan:</strong> ${item["Clan (s), include alt accounts"]}</p>
-        <p><strong>Role:</strong> ${item["Role (s)"]}</p>
-        <p><strong>Favorite Champ:</strong> ${item["Favorite champion (s)"]}</p>
+        <p><strong>Clan:</strong> ${item["Clan"]}</p>
+        <p><strong>Role:</strong> ${item["Role"]}</p>
+        <p><strong>Favorite Champ:</strong> ${item["Favorite Champion"]}</p>
         <p>${item["Other Comments"]}</p>
       `;
       container.appendChild(card);
     });
   }
 
-  data.forEach(item => {
-    clans.add(item["Clan (s), include alt accounts"]);
-    roles.add(item["Role (s)"]);
-  });
-
-  clans.forEach(c => {
-    if (c) {
-      const opt = document.createElement("option");
-      opt.value = c;
-      opt.textContent = c;
-      clanFilter.appendChild(opt);
-    }
-  });
-
-  roles.forEach(r => {
-    if (r) {
-      const opt = document.createElement("option");
-      opt.value = r;
-      opt.textContent = r;
-      roleFilter.appendChild(opt);
-    }
-  });
+  function populateDropdown(selectEl, options) {
+    selectEl.innerHTML = `<option value="">All</option>`;
+    options.forEach(opt => {
+      const option = document.createElement("option");
+      option.value = opt;
+      option.textContent = opt;
+      selectEl.appendChild(option);
+    });
+  }
 
   function filterCards() {
     const selectedClan = clanFilter.value;
     const selectedRole = roleFilter.value;
+    const searchName = nameInput.value.trim().toLowerCase();
+
     const filtered = data.filter(item => {
-      return (!selectedClan || item["Clan (s), include alt accounts"] === selectedClan) &&
-             (!selectedRole || item["Role (s)"] === selectedRole);
+      const clanMatch = !selectedClan || (item["Clan"] || "").toLowerCase().includes(selectedClan.toLowerCase());
+      const roleMatch = !selectedRole || (item["Role"] || "").toLowerCase().includes(selectedRole.toLowerCase());
+      const nameMatch = !searchName ||
+        (item["Discord User Name"] || "").toLowerCase().includes(searchName) ||
+        (item["In-Game User Name"] || "").toLowerCase().includes(searchName);
+
+      return clanMatch && roleMatch && nameMatch;
     });
+
     renderCards(filtered);
   }
 
+  populateDropdown(clanFilter, CLANS);
+  populateDropdown(roleFilter, ROLES);
+
   clanFilter.addEventListener("change", filterCards);
   roleFilter.addEventListener("change", filterCards);
+  nameSearchBtn.addEventListener("click", filterCards);
 
   renderCards(data);
 }

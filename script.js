@@ -35,9 +35,8 @@ function showInfo(data) {
       ).join("");
 
       card.innerHTML = `
-        <div class="thumbs">${thumbs}</div>
-        <h3>${item["In-Game User Name"]}</h3>
-        <p><strong>Discord:</strong> ${item["Discord User Name"]}</p>
+        <h3>${item["Discord User Name"]}</h3>
+        <p><strong>In-Game Name:</strong> ${item["In-Game User Name"]}</p>
         <p><strong>IRL Name:</strong> ${item["IRL Name"]}</p>
         <p><strong>Clan:</strong> ${item["Clan"]}</p>
         <p><strong>Role:</strong> ${item["Role"]}</p>
@@ -45,6 +44,7 @@ function showInfo(data) {
         <p><strong>Occupation:</strong> ${item["Occupation"]}</p>
         <p><strong>Family / Pets:</strong> ${item["Family / Pets"]}</p>
         <p><strong>Comments:</strong> ${item["Comments"]}</p>
+        ${thumbs ? `<p><strong>Images:</strong></p><div class="thumbs">${thumbs}</div>` : ""}
       `;
       container.appendChild(card);
     });

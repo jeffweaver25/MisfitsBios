@@ -38,6 +38,7 @@ function showInfo(data) {
         <div class="thumbs">${thumbs}</div>
         <h3>${item["In-Game User Name"]}</h3>
         <p><strong>Discord:</strong> ${item["Discord User Name"]}</p>
+        <p><strong>IRL Name:</strong> ${item["IRL Name"]}</p>
         <p><strong>Clan:</strong> ${item["Clan"]}</p>
         <p><strong>Role:</strong> ${item["Role"]}</p>
         <p><strong>Favorite Champ:</strong> ${item["Favorite Champion"]}</p>

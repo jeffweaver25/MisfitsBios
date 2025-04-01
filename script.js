@@ -40,7 +40,7 @@ function showInfo(data) {
         <p><strong>IRL Name:</strong> ${item["IRL Name"]}</p>
         <p><strong>Clan:</strong> ${item["Clan"]}</p>
         <p><strong>Role:</strong> ${item["Role"]}</p>
-        <p><strong>Role:</strong> ${item["Achievements"]}</p>
+        <p><strong>Achievements:</strong> ${item["Achievements"]}</p>
         <p><strong>Favorite Champ:</strong> ${item["Favorite Champion"]}</p>
         <p><strong>Occupation:</strong> ${item["Occupation"]}</p>
         <p><strong>Family / Pets:</strong> ${item["Family / Pets"]}</p>
